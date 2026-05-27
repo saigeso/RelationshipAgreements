@@ -1,21 +1,1 @@
-#!/usr/bin/env bash
-
-set -e
-
-echo "Starting docker services..."
-docker compose up -d
-
-echo "Waiting for postgres..."
-until docker compose exec db pg_isready -U postgres > /dev/null 2>&1
-do
-  sleep 1
-done
-
-echo "Running migrations..."
-if ! alembic upgrade head; then
-  alembic revision --autogenerate
-  alembic upgrade head
-fi
-
-echo "Starting FastAPI..."
-fastapi dev
+#!/usr/bin/env bashset -eecho "Starting docker services..."docker compose up -decho "Waiting for postgres..."until docker compose exec db pg_isready -U postgres > /dev/null 2>&1do  sleep 1doneecho "Running migrations..."if ! alembic upgrade head; then  alembic revision --autogenerate  alembic upgrade headfiecho "Starting FastAPI..."fastapi dev
