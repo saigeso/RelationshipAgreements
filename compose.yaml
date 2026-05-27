@@ -11,3 +11,5 @@ services:
 
 volumes:
   agreementsdb:
+    external: true
+    name: relationshipagreements_agreementsdb
